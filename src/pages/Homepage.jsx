@@ -5,7 +5,7 @@ const Homepage = () => {
     const { climateData } = useGlobalContext()
 
     return (
-        <div>
+        climateData && <div>
             {
                 climateData.map((data) => {
                     return (
