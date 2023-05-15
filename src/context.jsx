@@ -3,18 +3,32 @@ import {
     useContext,
     useState, useEffect
 } from "react";
+import { useGeolocated } from "react-geolocated";
+
 import weatherAPI from "./api/weatherAPI"
 
 const AppContext = createContext()
 const CURRENT_WEATHER_URL = "/current.json"
 
+
+
 const AppProvider = ({ children }) => {
 
     const [ locations, setLocations ] = useState(["dehradun", "london", "jakarta"])
     const [ climateData, setClimateData ] = useState()
+    const { coords } = useGeolocated({
+        positionOptions: {
+            enableHighAccuracy: true,
+        },
+        userDecisionTimeout: 5000
+    })
+
+    console.log(coords)
+
  
     const getClimateData = async ( url ) => {
         try {
+
             const responses = await Promise.all(locations.map((location) => {
                 return (
                     weatherAPI.get(url, {
@@ -35,9 +49,8 @@ const AppProvider = ({ children }) => {
             })
 
             setClimateData(data)
-            console.log(climateData)
         } catch (error) {
-            console.log(error.response)
+            console.log(error.message)
         }
     }
 
