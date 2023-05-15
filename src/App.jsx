@@ -1,15 +1,22 @@
-import './App.css'
+import {
+  BrowserRouter,
+  Route,
+  Routes
+} from "react-router-dom"
 
-import { useGlobalContext } from './context'
+import './App.css'
+import Homepage from './pages/Homepage'
 
 function App() {
-
-  const value = useGlobalContext()
 
   return (
    <div>
     Clime.com
-    {value}
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Homepage />} />
+      </Routes>
+    </BrowserRouter>
    </div>
   )
 }
